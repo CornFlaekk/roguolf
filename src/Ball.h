@@ -4,6 +4,7 @@ class Ball{
     public:
         void update();
         void draw();
+        void drawGuidingCircles();
         void setSpeed(int p_speed);
         void setTexture(Texture p_texture);
     private:

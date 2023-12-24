@@ -6,6 +6,7 @@ int screen_width = 854;
 int screen_height = 480;
 
 Ball ball;
+Texture bgTexture;
 
 void init();
 void loadTextures();
@@ -19,6 +20,7 @@ int main()
     {
         BeginDrawing();    
         ClearBackground(dark_blue);
+        DrawTexture(bgTexture, 0, 0, WHITE);
         
         ball.update();
         ball.draw();
@@ -43,6 +45,9 @@ void loadTextures()
     Image image = LoadImage("images/ball_medium.png");
     Texture ball_tex = LoadTextureFromImage(image);
     ball.setTexture(ball_tex);
+
+    image = LoadImage("images/background.png");
+    bgTexture = LoadTextureFromImage(image); 
 
     UnloadImage(image);
 }

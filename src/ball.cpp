@@ -57,9 +57,30 @@ void Ball::draw()
     DrawTexture(texture, x, y, WHITE);
     if (x_accel == 0 && y_accel == 0 && IsCursorOnScreen())
     {
-        DrawCircle(x+(texture.width/2) + (x - GetMouseX()) * 0.20, y+(texture.height/2) + (y - GetMouseY()) * 0.20, 4, WHITE);
-        DrawCircle(x+(texture.width/2) + (x - GetMouseX()) * 0.35, y+(texture.height/2) + (y - GetMouseY()) * 0.35, 4, WHITE);
-        DrawCircle(x+(texture.width/2) + (x - GetMouseX()) * 0.50, y+(texture.height/2) + (y - GetMouseY()) * 0.50, 4, WHITE);
+        drawGuidingCircles();
+    }
+}
+
+void Ball::drawGuidingCircles()
+{
+    float distance_multipliers[] = {0.20, 0.35, 0.50};
+
+    for (int i = 0; i < (sizeof(distance_multipliers)/sizeof(distance_multipliers[0])); i++)
+    {
+        float multiplier = distance_multipliers[i];
+
+        int circle_x = x+(texture.width/2) + (x - GetMouseX()) * multiplier;
+        int circle_y = y+(texture.height/2) + (y - GetMouseY()) * multiplier;
+
+        while (circle_x < 0 || circle_y < 0 || circle_x > GetScreenWidth() || circle_y > GetScreenHeight())
+        {
+            if (circle_x < 0) circle_x = abs(circle_x);
+            if (circle_y < 0) circle_y = abs(circle_y);
+            if (circle_x > GetScreenWidth()) circle_x = GetScreenWidth() - (circle_x - GetScreenWidth());
+            if (circle_y > GetScreenHeight()) circle_y = GetScreenHeight() - (circle_y - GetScreenHeight());
+        }
+
+        DrawCircle(circle_x, circle_y, 4, WHITE);
     }
 }
 
