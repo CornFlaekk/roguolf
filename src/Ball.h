@@ -10,5 +10,7 @@ class Ball{
         int x = 0;
         int y = 0;
         int speed = 5;
+        int x_accel = 0;
+        int y_accel = 0;
         Texture texture;
 };

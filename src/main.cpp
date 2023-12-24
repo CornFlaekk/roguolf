@@ -2,7 +2,7 @@
 #include "Ball.h"
 
 Color dark_blue = {44, 44, 127, 255};
-int screen_width = 640;
+int screen_width = 854;
 int screen_height = 480;
 
 Ball ball;
@@ -23,6 +23,8 @@ int main()
         ball.update();
         ball.draw();
 
+        DrawFPS(0,0);
+
         EndDrawing();
     }
 
@@ -38,7 +40,7 @@ void init()
 
 void loadTextures()
 {
-    Image image = LoadImage("images/ball.png");
+    Image image = LoadImage("images/ball_medium.png");
     Texture ball_tex = LoadTextureFromImage(image);
     ball.setTexture(ball_tex);
 
