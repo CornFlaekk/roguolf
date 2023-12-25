@@ -8,9 +8,11 @@ class Obstacle{
         void setPosition(int x, int y);
         void setPositionFromCenter(int x, int y);
         void clearPositions();
-        std::vector<Rectangle> getCollisionRectangles();
+        void setTextureCollisionRectangle(Rectangle collision);
+        std::vector<Rectangle> getOnScreenCollisionRectangles();
     private:
         std::vector<std::vector<int>> positions;
         Texture texture;
-        std::vector<Rectangle> collisionRectangles;
+        std::vector<Rectangle> textureCollisionRectangles;
+        std::vector<Rectangle> onScreenCollisionRectangles;
 };

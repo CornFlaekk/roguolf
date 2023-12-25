@@ -170,21 +170,6 @@ float Ball::getAccel()
     return (float) (abs(x_accel) + abs(y_accel)) / (MAX_ACCEL_X + MAX_ACCEL_Y);
 }
 
-int Ball::getSpeed()
-{
-    return speed;
-}
-
-int Ball::getAccelX()
-{
-    return x_accel;
-}
-
-int Ball::getAccelY()
-{
-    return y_accel;
-}
-
 void Ball::invertAccelX()
 {
     x_accel *= -1;

@@ -17,9 +17,6 @@ class Ball{
         void setMaxAccel();
         float getPreviewAccel();
         float getAccel();
-        int getSpeed();
-        int getAccelX();
-        int getAccelY();
         void invertAccelX();
         void invertAccelY();
         Vector2 getCenter();

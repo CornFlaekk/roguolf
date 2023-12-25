@@ -20,22 +20,35 @@ void Obstacle::draw()
 void Obstacle::setPosition(int x, int y)
 {
     positions.push_back({x, y});
-    collisionRectangles.push_back((Rectangle) {(float) x, (float) y, (float) (texture.width), (float) (texture.height)});
-}
+    for(Rectangle rect : textureCollisionRectangles)
+    {
+        Rectangle onScreenCollisionRect = {(float) rect.x + x, (float) rect.y + y, rect.width, rect.height};
+        onScreenCollisionRectangles.push_back(onScreenCollisionRect);
+    }
+    }
 
 void Obstacle::setPositionFromCenter(int x, int y)
 {
     positions.push_back({x - (texture.width/2), y - (texture.height/2)});
-    collisionRectangles.push_back((Rectangle) {(float) (x - texture.width/2), (float) (y - texture.height/2), (float) (texture.width), (float) (texture.height)});
+    for(Rectangle rect : textureCollisionRectangles)
+    {
+        Rectangle onScreenCollisionRect = {(float) (rect.x + x - texture.width/2), (float) (rect.y + y - texture.height/2), rect.width, rect.height};
+        onScreenCollisionRectangles.push_back(onScreenCollisionRect);
+    }
 }
 
 void Obstacle::clearPositions()
 {
     positions.clear();
-    collisionRectangles.clear();
+    onScreenCollisionRectangles.clear();
 }
 
-std::vector<Rectangle> Obstacle::getCollisionRectangles()
+void Obstacle::setTextureCollisionRectangle(Rectangle collision)
 {
-    return collisionRectangles;
+    textureCollisionRectangles.push_back(collision);
+}
+
+std::vector<Rectangle> Obstacle::getOnScreenCollisionRectangles()
+{
+    return onScreenCollisionRectangles;
 }

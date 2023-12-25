@@ -20,6 +20,9 @@ PowerBar powerBar;
 
 //Obstacles
 Obstacle rockVertical;
+Obstacle block2x2Blue;
+Obstacle block1x2Blue;
+Obstacle block1x1Blue;
 
 void init();
 void loadTextures();
@@ -50,6 +53,9 @@ int main()
         float accel = ball.getAccel();
 
         rockVertical.draw();
+        block2x2Blue.draw();
+        block1x2Blue.draw();
+        block1x1Blue.draw();
 
         powerBar.draw(accel, accel_preview);
 
@@ -88,6 +94,23 @@ void loadTextures()
     image = LoadImage("images/obstacle_rock_vertical.png");
     texture = LoadTextureFromImage(image);
     rockVertical.setTexture(texture);
+    rockVertical.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
+
+    image = LoadImage("images/block_2x2_blue.png");
+    texture = LoadTextureFromImage(image);
+    block2x2Blue.setTexture(texture);
+    block2x2Blue.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
+
+    image = LoadImage("images/block_1x2_blue.png");
+    texture = LoadTextureFromImage(image);
+    block1x2Blue.setTexture(texture);
+    block1x2Blue.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
+
+    image = LoadImage("images/block_1x1_blue.png");
+    texture = LoadTextureFromImage(image);
+    block1x1Blue.setTexture(texture);
+    block1x1Blue.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
+
 
     UnloadImage(image);
 }
@@ -102,6 +125,12 @@ void loadObstacles()
 {
     rockVertical.setPosition(500, 0);
     rockVertical.setPositionFromCenter(GetScreenWidth()/2, GetScreenHeight()/2);
+
+    block2x2Blue.setPosition(100, GetScreenHeight() - (96+32));
+
+    block1x2Blue.setPosition(600, 300);
+
+    block1x1Blue.setPosition(100, 100);
 }
 
 void checkColissions()
@@ -113,12 +142,15 @@ void checkColissions()
     }
     
     collided = checkObstacleCollisions(rockVertical);
+    collided = checkObstacleCollisions(block2x2Blue);
+    collided = checkObstacleCollisions(block1x2Blue);
+    collided = checkObstacleCollisions(block1x1Blue);
 
 }
 
 bool checkObstacleCollisions(Obstacle obs)
 {
-    std::vector<Rectangle> collisions = obs.getCollisionRectangles();
+    std::vector<Rectangle> collisions = obs.getOnScreenCollisionRectangles();
     if(collisions.size() == 0)
         return false;
     
