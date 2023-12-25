@@ -126,6 +126,16 @@ void Ball::calcAccelPreview()
 
 }
 
+void Ball::setX(int val)
+{
+    x = val;
+}
+
+void Ball::setY(int val)
+{
+    y = val;
+}
+
 void Ball::setSpeed(int p_speed)
 {
     speed = p_speed;
@@ -158,4 +168,34 @@ float Ball::getPreviewAccel()
 float Ball::getAccel()
 {
     return (float) (abs(x_accel) + abs(y_accel)) / (MAX_ACCEL_X + MAX_ACCEL_Y);
+}
+
+int Ball::getSpeed()
+{
+    return speed;
+}
+
+int Ball::getAccelX()
+{
+    return x_accel;
+}
+
+int Ball::getAccelY()
+{
+    return y_accel;
+}
+
+void Ball::invertAccelX()
+{
+    x_accel *= -1;
+}
+
+void Ball::invertAccelY()
+{
+    y_accel *= -1;
+}
+
+Vector2 Ball::getCenter()
+{
+    return (Vector2) {(float) x + texture.width/2, (float) y + texture.height/2};
 }

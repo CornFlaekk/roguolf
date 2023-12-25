@@ -3,17 +3,26 @@
 
 class Ball{
     public:
+        const int radius = 8;
         void update();
         void draw();
         void calcAnimation();
         void drawGuidingCircles();
         void calcAccelPreview();
+        void setX(int val);
+        void setY(int val);
         void setSpeed(int p_speed);
         void setTexture(Texture p_texture);
         void setPowerBarHeight(int value);
         void setMaxAccel();
         float getPreviewAccel();
         float getAccel();
+        int getSpeed();
+        int getAccelX();
+        int getAccelY();
+        void invertAccelX();
+        void invertAccelY();
+        Vector2 getCenter();
     private:
         int MAX_ACCEL_X;
         int MAX_ACCEL_Y;
