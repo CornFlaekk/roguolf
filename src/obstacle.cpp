@@ -25,7 +25,7 @@ void Obstacle::setPosition(int x, int y)
         Rectangle onScreenCollisionRect = {(float) rect.x + x, (float) rect.y + y, rect.width, rect.height};
         onScreenCollisionRectangles.push_back(onScreenCollisionRect);
     }
-    }
+}
 
 void Obstacle::setPositionFromCenter(int x, int y)
 {

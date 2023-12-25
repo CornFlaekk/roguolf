@@ -20,6 +20,7 @@ class Ball{
         void invertAccelX();
         void invertAccelY();
         Vector2 getCenter();
+        int getDamage();
     private:
         int MAX_ACCEL_X;
         int MAX_ACCEL_Y;
@@ -31,6 +32,8 @@ class Ball{
         int x_accel = 0;
         int y_accel = 0;
         int powerbar_height = 0;
+
+        int damage = 1;
 
         int animation_id = 0;
         int animation_frame = 0;

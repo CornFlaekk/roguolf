@@ -6,6 +6,7 @@
 #include "Ball.h"
 #include "PowerBar.h"
 #include "Obstacle.h"
+#include "Enemy.h"
 
 bool debug = true;
 
@@ -24,12 +25,21 @@ Obstacle block2x2Blue;
 Obstacle block1x2Blue;
 Obstacle block1x1Blue;
 
+//Enemies
+Enemy tigerWoods1x;
+Enemy tigerWoods2x;
+Enemy tigerWoods3x;
+Enemy tigerWoods4x;
+
+
 void init();
 void loadTextures();
 void loadParameters();
 void loadObstacles();
+void loadEnemies();
 void checkColissions();
 bool checkObstacleCollisions(Obstacle obs);
+bool checkEnemyCollisions(Enemy enemy);
 void manageBallCollision(Rectangle collision);
 
 int main()
@@ -38,6 +48,7 @@ int main()
     loadTextures();
     loadParameters();
     loadObstacles();
+    loadEnemies();
 
     while(WindowShouldClose() == false)
     {
@@ -56,6 +67,11 @@ int main()
         block2x2Blue.draw();
         block1x2Blue.draw();
         block1x1Blue.draw();
+
+        tigerWoods1x.draw();
+        tigerWoods2x.draw();
+        tigerWoods3x.draw();
+        tigerWoods4x.draw();
 
         powerBar.draw(accel, accel_preview);
 
@@ -111,6 +127,25 @@ void loadTextures()
     block1x1Blue.setTexture(texture);
     block1x1Blue.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
 
+    image = LoadImage("images/tiger_woods_1x.png");
+    texture = LoadTextureFromImage(image);
+    tigerWoods1x.setTexture(texture);
+    tigerWoods1x.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
+
+    image = LoadImage("images/tiger_woods_2x.png");
+    texture = LoadTextureFromImage(image);
+    tigerWoods2x.setTexture(texture);
+    tigerWoods2x.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
+
+    image = LoadImage("images/tiger_woods_3x.png");
+    texture = LoadTextureFromImage(image);
+    tigerWoods3x.setTexture(texture);
+    tigerWoods3x.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
+
+    image = LoadImage("images/tiger_woods_4x.png");
+    texture = LoadTextureFromImage(image);
+    tigerWoods4x.setTexture(texture);
+    tigerWoods4x.setTextureCollisionRectangle((Rectangle) {0, 0, (float) texture.width, (float) texture.height});
 
     UnloadImage(image);
 }
@@ -123,14 +158,17 @@ void loadParameters()
 
 void loadObstacles()
 {
-    rockVertical.setPosition(500, 0);
-    rockVertical.setPositionFromCenter(GetScreenWidth()/2, GetScreenHeight()/2);
-
     block2x2Blue.setPosition(100, GetScreenHeight() - (96+32));
 
     block1x2Blue.setPosition(600, 300);
 
     block1x1Blue.setPosition(100, 100);
+}
+
+void loadEnemies()
+{
+    tigerWoods3x.setPosition(700, 200);
+    tigerWoods3x.setLife(2);
 }
 
 void checkColissions()
@@ -146,6 +184,8 @@ void checkColissions()
     collided = checkObstacleCollisions(block1x2Blue);
     collided = checkObstacleCollisions(block1x1Blue);
 
+    collided = checkEnemyCollisions(tigerWoods3x);
+
 }
 
 bool checkObstacleCollisions(Obstacle obs)
@@ -159,6 +199,25 @@ bool checkObstacleCollisions(Obstacle obs)
         if(CheckCollisionCircleRec(ball.getCenter(), ball.radius, coll))
         {
             //if(debug) std::cout << "COLLISION - RADIUS(" << ball.radius << ") - RECTANGLE(()" << coll.x << "," << coll.y << ")-()" << coll.x + coll.width << "," << coll.y + coll.height << "))" <<  std::endl;            
+            manageBallCollision(coll);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool checkEnemyCollisions(Enemy enemy)
+{
+    std::vector<Rectangle> collisions = enemy.getOnScreenCollisionRectangles();
+    if(collisions.size() == 0)
+        return false;
+    
+    for(Rectangle coll : collisions)
+    {
+        if(CheckCollisionCircleRec(ball.getCenter(), ball.radius, coll))
+        {
+            //if(debug) std::cout << "COLLISION - RADIUS(" << ball.radius << ") - RECTANGLE(()" << coll.x << "," << coll.y << ")-()" << coll.x + coll.width << "," << coll.y + coll.height << "))" <<  std::endl;            
+            enemy.hit(ball.getDamage());
             manageBallCollision(coll);
             return true;
         }

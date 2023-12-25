@@ -184,3 +184,8 @@ Vector2 Ball::getCenter()
 {
     return (Vector2) {(float) x + texture.width/2, (float) y + texture.height/2};
 }
+
+int Ball::getDamage()
+{
+    return damage;
+}
