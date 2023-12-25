@@ -1,4 +1,4 @@
-bin
-.vscode
-compile.sh
-run.sh
+/bin/
+/.vscode/
+/compile.sh
+/run.sh
